@@ -3,8 +3,8 @@ use std::ffi::CString;
 use raylib_sys::{
     BeginDrawing, BeginMode3D, Camera3D, CameraProjection_CAMERA_PERSPECTIVE,
     ClearBackground, DrawCube, EndDrawing, EndMode3D, GetColor, GetFrameTime,
-    InitWindow, IsKeyDown, KeyboardKey_KEY_S, KeyboardKey_KEY_W,
-    WindowShouldClose,
+    InitWindow, IsKeyDown, KeyboardKey_KEY_A, KeyboardKey_KEY_D,
+    KeyboardKey_KEY_S, KeyboardKey_KEY_W, WindowShouldClose,
 };
 
 macro_rules! vector3 {
@@ -42,6 +42,12 @@ fn main() {
             }
             if IsKeyDown(KeyboardKey_KEY_S as i32) {
                 camera.position.z -= camera_speed * dt;
+            }
+            if IsKeyDown(KeyboardKey_KEY_D as i32) {
+                camera.position.x += camera_speed * dt;
+            }
+            if IsKeyDown(KeyboardKey_KEY_A as i32) {
+                camera.position.x -= camera_speed * dt;
             }
             BeginDrawing();
             ClearBackground(color);
