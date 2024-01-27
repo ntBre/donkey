@@ -1,9 +1,10 @@
 use std::ffi::CString;
 
+use colors::IntoColor;
 use keys::Key;
 use raylib_sys::{
-    BeginDrawing, EndDrawing, GetFrameTime, InitWindow, IsKeyDown,
-    WindowShouldClose,
+    BeginDrawing, BeginMode3D, Camera3D, ClearBackground, DrawCube, EndDrawing,
+    EndMode3D, GetFrameTime, InitWindow, IsKeyDown, Vector3, WindowShouldClose,
 };
 
 #[macro_export]
@@ -36,12 +37,46 @@ impl Window {
         unsafe { IsKeyDown(key as i32) }
     }
 
+    /// TODO do one of those cool closure things here:
+    /// ```
+    /// win.draw(|canvas| {
+    ///     canvas.clear_background(color);
+    ///     ...
+    /// })
+    /// ```
     pub fn begin_drawing(&self) {
         unsafe { BeginDrawing() }
     }
 
     pub fn end_drawing(&self) {
         unsafe { EndDrawing() }
+    }
+
+    // drawing functions
+
+    pub fn clear_background(&self, color: impl IntoColor) {
+        unsafe { ClearBackground(color.into()) }
+    }
+
+    pub fn draw_cube(
+        &self,
+        center: Vector3,
+        width: f32,
+        height: f32,
+        length: f32,
+        color: impl IntoColor,
+    ) {
+        unsafe { DrawCube(center, width, height, length, color.into()) }
+    }
+
+    // end drawing
+
+    pub fn begin_mode3d(&self, camera: Camera3D) {
+        unsafe { BeginMode3D(camera) }
+    }
+
+    pub fn end_mode3d(&self) {
+        unsafe { EndMode3D() }
     }
 }
 
@@ -113,6 +148,12 @@ pub mod colors {
 
     pub fn color(c: impl IntoColor) -> Color {
         c.into()
+    }
+
+    impl IntoColor for Color {
+        fn into(self) -> Color {
+            self
+        }
     }
 
     impl IntoColor for u32 {
