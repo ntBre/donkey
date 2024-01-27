@@ -1,6 +1,10 @@
 use std::ffi::CString;
 
-use raylib_sys::InitWindow;
+use keys::Key;
+use raylib_sys::{
+    BeginDrawing, EndDrawing, GetFrameTime, InitWindow, IsKeyDown,
+    WindowShouldClose,
+};
 
 #[macro_export]
 macro_rules! vector3 {
@@ -9,10 +13,67 @@ macro_rules! vector3 {
     };
 }
 
-pub fn init_window(width: i32, height: i32, title: &str) {
-    let title = CString::new(title).unwrap();
-    unsafe {
-        InitWindow(width, height, title.as_ptr());
+pub struct Window;
+
+impl Window {
+    pub fn init(width: i32, height: i32, title: &str) -> Self {
+        let title = CString::new(title).unwrap();
+        unsafe {
+            InitWindow(width, height, title.as_ptr());
+        }
+        Self
+    }
+
+    pub fn should_close(&self) -> bool {
+        unsafe { WindowShouldClose() }
+    }
+
+    pub fn get_frame_time(&self) -> f32 {
+        unsafe { GetFrameTime() }
+    }
+
+    pub fn is_key_down(&self, key: Key) -> bool {
+        unsafe { IsKeyDown(key as i32) }
+    }
+
+    pub fn begin_drawing(&self) {
+        unsafe { BeginDrawing() }
+    }
+
+    pub fn end_drawing(&self) {
+        unsafe { EndDrawing() }
+    }
+}
+
+pub mod keys {
+    #[repr(i32)]
+    pub enum Key {
+        A = raylib_sys::KeyboardKey_KEY_A as i32,
+        B = raylib_sys::KeyboardKey_KEY_B as i32,
+        C = raylib_sys::KeyboardKey_KEY_C as i32,
+        D = raylib_sys::KeyboardKey_KEY_D as i32,
+        E = raylib_sys::KeyboardKey_KEY_E as i32,
+        F = raylib_sys::KeyboardKey_KEY_F as i32,
+        G = raylib_sys::KeyboardKey_KEY_G as i32,
+        H = raylib_sys::KeyboardKey_KEY_H as i32,
+        I = raylib_sys::KeyboardKey_KEY_I as i32,
+        J = raylib_sys::KeyboardKey_KEY_J as i32,
+        K = raylib_sys::KeyboardKey_KEY_K as i32,
+        L = raylib_sys::KeyboardKey_KEY_L as i32,
+        M = raylib_sys::KeyboardKey_KEY_M as i32,
+        N = raylib_sys::KeyboardKey_KEY_N as i32,
+        O = raylib_sys::KeyboardKey_KEY_O as i32,
+        P = raylib_sys::KeyboardKey_KEY_P as i32,
+        Q = raylib_sys::KeyboardKey_KEY_Q as i32,
+        R = raylib_sys::KeyboardKey_KEY_R as i32,
+        S = raylib_sys::KeyboardKey_KEY_S as i32,
+        T = raylib_sys::KeyboardKey_KEY_T as i32,
+        U = raylib_sys::KeyboardKey_KEY_U as i32,
+        V = raylib_sys::KeyboardKey_KEY_V as i32,
+        W = raylib_sys::KeyboardKey_KEY_W as i32,
+        X = raylib_sys::KeyboardKey_KEY_X as i32,
+        Y = raylib_sys::KeyboardKey_KEY_Y as i32,
+        Z = raylib_sys::KeyboardKey_KEY_Z as i32,
     }
 }
 
@@ -57,10 +118,10 @@ pub mod colors {
     impl IntoColor for u32 {
         fn into(self) -> Color {
             Color {
-                r: 0xFF & (self >> 24) as u8,
-                g: 0xFF & (self >> 16) as u8,
-                b: 0xFF & (self >> 8) as u8,
-                a: 0xFF & (self >> 0) as u8,
+                r: (self >> 24) as u8,
+                g: (self >> 16) as u8,
+                b: (self >> 8) as u8,
+                a: self as u8,
             }
         }
     }
