@@ -3,8 +3,9 @@ use std::ffi::CString;
 use colors::IntoColor;
 use keys::Key;
 use raylib_sys::{
-    BeginDrawing, BeginMode3D, Camera3D, ClearBackground, DrawCube, EndDrawing,
-    EndMode3D, GetFrameTime, InitWindow, IsKeyDown, Vector3, WindowShouldClose,
+    BeginDrawing, BeginMode3D, Camera3D, ClearBackground, DrawCube, DrawSphere,
+    EndDrawing, EndMode3D, GetFrameTime, InitWindow, IsKeyDown, TakeScreenshot,
+    Vector3, WindowShouldClose,
 };
 
 pub mod colors;
@@ -34,6 +35,13 @@ impl Window {
 
     pub fn get_frame_time(&self) -> f32 {
         unsafe { GetFrameTime() }
+    }
+
+    pub fn take_screenshot(&self, filename: &str) {
+        let filename = CString::new(filename).unwrap();
+        unsafe {
+            TakeScreenshot(filename.as_ptr());
+        }
     }
 
     pub fn is_key_down(&self, key: Key) -> bool {
@@ -70,6 +78,15 @@ impl Window {
         color: impl IntoColor,
     ) {
         unsafe { DrawCube(center, width, height, length, color.into()) }
+    }
+
+    pub fn draw_sphere(
+        &self,
+        center: Vector3,
+        radius: f32,
+        color: impl IntoColor,
+    ) {
+        unsafe { DrawSphere(center, radius, color.into()) }
     }
 
     // end drawing
