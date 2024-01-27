@@ -3,9 +3,9 @@ use std::ffi::CString;
 use colors::IntoColor;
 use keys::Key;
 use raylib_sys::{
-    BeginDrawing, BeginMode3D, Camera3D, ClearBackground, DrawCube, DrawSphere,
-    EndDrawing, EndMode3D, GetFrameTime, InitWindow, IsKeyDown, TakeScreenshot,
-    Vector3, WindowShouldClose,
+    BeginDrawing, BeginMode3D, Camera3D, ClearBackground, DrawCube,
+    DrawCylinderEx, DrawSphere, EndDrawing, EndMode3D, GetFrameTime,
+    InitWindow, IsKeyDown, TakeScreenshot, Vector3, WindowShouldClose,
 };
 
 pub mod colors;
@@ -87,6 +87,17 @@ impl Window {
         color: impl IntoColor,
     ) {
         unsafe { DrawSphere(center, radius, color.into()) }
+    }
+
+    /// draw a cylinder from `start` to `end` with constant `radius`
+    pub fn draw_cylinder(
+        &self,
+        start: Vector3,
+        end: Vector3,
+        radius: f32,
+        color: impl IntoColor,
+    ) {
+        unsafe { DrawCylinderEx(start, end, radius, radius, 8, color.into()) }
     }
 
     // end drawing
