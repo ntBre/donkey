@@ -1,21 +1,12 @@
 use std::ffi::CString;
 
+use donkey::vector3;
 use raylib_sys::{
     BeginDrawing, BeginMode3D, Camera3D, CameraProjection_CAMERA_PERSPECTIVE,
     ClearBackground, DrawCube, EndDrawing, EndMode3D, GetColor, GetFrameTime,
     InitWindow, IsKeyDown, KeyboardKey_KEY_A, KeyboardKey_KEY_D,
     KeyboardKey_KEY_S, KeyboardKey_KEY_W, WindowShouldClose,
 };
-
-macro_rules! vector3 {
-    ($x:expr, $y:expr, $z:expr) => {
-        raylib_sys::Vector3 {
-            x: $x,
-            y: $y,
-            z: $z,
-        }
-    };
-}
 
 /// basic example based on Tsoding's "Ridiculously Easy 3D in C" video:
 /// https://www.youtube.com/watch?v=K7hWqxC_7Mw
