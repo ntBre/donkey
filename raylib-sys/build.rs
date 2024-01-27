@@ -7,6 +7,7 @@ fn main() {
     let bind = bindgen::Builder::default()
         .header("wrapper.h")
         .parse_callbacks(Box::new(bindgen::CargoCallbacks::new()))
+        .blocklist_item("PI")
         .generate()
         .expect("Unable to generate bindings");
 
