@@ -15,9 +15,10 @@ use raylib_sys::{
     KeyboardKey_KEY_DOWN, KeyboardKey_KEY_KP_ADD, KeyboardKey_KEY_KP_SUBTRACT,
     KeyboardKey_KEY_LEFT, KeyboardKey_KEY_LEFT_CONTROL, KeyboardKey_KEY_RIGHT,
     KeyboardKey_KEY_SPACE, KeyboardKey_KEY_UP, MatrixRotate,
-    MouseButton_MOUSE_BUTTON_MIDDLE, TakeScreenshot, Vector3,
-    WindowShouldClose, CAMERA_MOUSE_MOVE_SENSITIVITY, CAMERA_MOVE_SPEED,
-    CAMERA_ORBITAL_SPEED, CAMERA_PAN_SPEED, CAMERA_ROTATION_SPEED,
+    MouseButton_MOUSE_BUTTON_LEFT, MouseButton_MOUSE_BUTTON_MIDDLE,
+    TakeScreenshot, Vector3, WindowShouldClose, CAMERA_MOUSE_MOVE_SENSITIVITY,
+    CAMERA_MOVE_SPEED, CAMERA_ORBITAL_SPEED, CAMERA_PAN_SPEED,
+    CAMERA_ROTATION_SPEED,
 };
 
 pub mod colors;
@@ -228,20 +229,24 @@ impl Window {
                         }
                     } else {
                         // Mouse support
-                        CameraYaw(
-                            camera,
-                            -mouse_position_delta.x
-                                * CAMERA_MOUSE_MOVE_SENSITIVITY,
-                            rotate_around_target,
-                        );
-                        CameraPitch(
-                            camera,
-                            -mouse_position_delta.y
-                                * CAMERA_MOUSE_MOVE_SENSITIVITY,
-                            lock_view,
-                            rotate_around_target,
-                            rotate_up,
-                        );
+                        if IsMouseButtonDown(
+                            MouseButton_MOUSE_BUTTON_LEFT as i32,
+                        ) {
+                            CameraYaw(
+                                camera,
+                                -mouse_position_delta.x
+                                    * CAMERA_MOUSE_MOVE_SENSITIVITY,
+                                rotate_around_target,
+                            );
+                            CameraPitch(
+                                camera,
+                                -mouse_position_delta.y
+                                    * CAMERA_MOUSE_MOVE_SENSITIVITY,
+                                lock_view,
+                                rotate_around_target,
+                                rotate_up,
+                            );
+                        }
                     }
 
                     // Keyboard support
