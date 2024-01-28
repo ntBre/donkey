@@ -3,6 +3,7 @@ use std::ffi::CString;
 use colors::IntoColor;
 use keys::Key;
 use raylib_sys::{
+    vector3::{Vector3Add, Vector3Subtract, Vector3Transform},
     BeginDrawing, BeginMode3D, Camera3D, CameraMoveForward, CameraMoveRight,
     CameraMoveToTarget, CameraMoveUp, CameraPitch, CameraRoll, CameraYaw,
     ClearBackground, DrawCube, DrawCylinderEx, DrawSphere, EndDrawing,
@@ -278,7 +279,7 @@ impl Window {
                         camera,
                         -(GetGamepadAxisMovement(
                             0,
-                            GamepadAxis_GAMEPAD_AXIS_RIGHT_X,
+                            GamepadAxis_GAMEPAD_AXIS_RIGHT_X as i32,
                         ) * 2.0)
                             * CAMERA_MOUSE_MOVE_SENSITIVITY,
                         rotate_around_target,
@@ -287,7 +288,7 @@ impl Window {
                         camera,
                         -(GetGamepadAxisMovement(
                             0,
-                            GamepadAxis_GAMEPAD_AXIS_RIGHT_Y,
+                            GamepadAxis_GAMEPAD_AXIS_RIGHT_Y as i32,
                         ) * 2.0)
                             * CAMERA_MOUSE_MOVE_SENSITIVITY,
                         lock_view,
@@ -297,7 +298,7 @@ impl Window {
 
                     if (GetGamepadAxisMovement(
                         0,
-                        GamepadAxis_GAMEPAD_AXIS_LEFT_Y,
+                        GamepadAxis_GAMEPAD_AXIS_LEFT_Y as i32,
                     ) <= -0.25)
                     {
                         CameraMoveForward(
@@ -308,7 +309,7 @@ impl Window {
                     }
                     if (GetGamepadAxisMovement(
                         0,
-                        GamepadAxis_GAMEPAD_AXIS_LEFT_X,
+                        GamepadAxis_GAMEPAD_AXIS_LEFT_X as i32,
                     ) <= -0.25)
                     {
                         CameraMoveRight(
@@ -319,7 +320,7 @@ impl Window {
                     }
                     if (GetGamepadAxisMovement(
                         0,
-                        GamepadAxis_GAMEPAD_AXIS_LEFT_Y,
+                        GamepadAxis_GAMEPAD_AXIS_LEFT_Y as i32,
                     ) >= 0.25)
                     {
                         CameraMoveForward(
@@ -330,7 +331,7 @@ impl Window {
                     }
                     if (GetGamepadAxisMovement(
                         0,
-                        GamepadAxis_GAMEPAD_AXIS_LEFT_X,
+                        GamepadAxis_GAMEPAD_AXIS_LEFT_X as i32,
                     ) >= 0.25)
                     {
                         CameraMoveRight(
