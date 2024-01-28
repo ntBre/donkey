@@ -76,7 +76,7 @@ impl Window {
     }
 
     /// TODO do one of those cool closure things here:
-    /// ```
+    /// ```notrust
     /// win.draw(|canvas| {
     ///     canvas.clear_background(color);
     ///     ...
