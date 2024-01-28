@@ -167,7 +167,7 @@ impl Window {
                         rotate_up,
                     )
                 };
-                if (IsKeyDown(KeyboardKey_KEY_UP as i32)) {
+                if IsKeyDown(KeyboardKey_KEY_UP as i32) {
                     CameraPitch(
                         camera,
                         CAMERA_ROTATION_SPEED,
@@ -176,54 +176,54 @@ impl Window {
                         rotate_up,
                     )
                 };
-                if (IsKeyDown(KeyboardKey_KEY_RIGHT as i32)) {
+                if IsKeyDown(KeyboardKey_KEY_RIGHT as i32) {
                     CameraYaw(
                         camera,
                         -CAMERA_ROTATION_SPEED,
                         rotate_around_target,
                     )
                 };
-                if (IsKeyDown(KeyboardKey_KEY_LEFT as i32)) {
+                if IsKeyDown(KeyboardKey_KEY_LEFT as i32) {
                     CameraYaw(
                         camera,
                         CAMERA_ROTATION_SPEED,
                         rotate_around_target,
                     )
                 };
-                if (IsKeyDown(Key::Q as i32)) {
+                if IsKeyDown(Key::Q as i32) {
                     CameraRoll(camera, -CAMERA_ROTATION_SPEED)
                 };
-                if (IsKeyDown(Key::E as i32)) {
+                if IsKeyDown(Key::E as i32) {
                     CameraRoll(camera, CAMERA_ROTATION_SPEED)
                 };
 
                 // Camera movement
-                if (!IsGamepadAvailable(0)) {
+                if !IsGamepadAvailable(0) {
                     // Camera pan (for CAMERA_FREE)
-                    if ((mode == CM::Free)
+                    if (mode == CM::Free)
                         && (IsMouseButtonDown(
                             MouseButton_MOUSE_BUTTON_MIDDLE as i32,
-                        )))
+                        ))
                     {
-                        let mouseDelta = GetMouseDelta();
-                        if (mouseDelta.x > 0.0) {
+                        let mouse_delta = GetMouseDelta();
+                        if mouse_delta.x > 0.0 {
                             CameraMoveRight(
                                 camera,
                                 CAMERA_PAN_SPEED,
                                 move_in_world_plane,
                             );
                         }
-                        if (mouseDelta.x < 0.0) {
+                        if mouse_delta.x < 0.0 {
                             CameraMoveRight(
                                 camera,
                                 -CAMERA_PAN_SPEED,
                                 move_in_world_plane,
                             );
                         }
-                        if (mouseDelta.y > 0.0) {
+                        if mouse_delta.y > 0.0 {
                             CameraMoveUp(camera, -CAMERA_PAN_SPEED);
                         }
-                        if (mouseDelta.y < 0.0) {
+                        if mouse_delta.y < 0.0 {
                             CameraMoveUp(camera, CAMERA_PAN_SPEED);
                         }
                     } else {
@@ -245,28 +245,28 @@ impl Window {
                     }
 
                     // Keyboard support
-                    if (IsKeyDown(Key::W as i32)) {
+                    if IsKeyDown(Key::W as i32) {
                         CameraMoveForward(
                             camera,
                             CAMERA_MOVE_SPEED,
                             move_in_world_plane,
                         );
                     }
-                    if (IsKeyDown(Key::A as i32)) {
+                    if IsKeyDown(Key::A as i32) {
                         CameraMoveRight(
                             camera,
                             -CAMERA_MOVE_SPEED,
                             move_in_world_plane,
                         );
                     }
-                    if (IsKeyDown(Key::S as i32)) {
+                    if IsKeyDown(Key::S as i32) {
                         CameraMoveForward(
                             camera,
                             -CAMERA_MOVE_SPEED,
                             move_in_world_plane,
                         );
                     }
-                    if (IsKeyDown(Key::D as i32)) {
+                    if IsKeyDown(Key::D as i32) {
                         CameraMoveRight(
                             camera,
                             CAMERA_MOVE_SPEED,
@@ -296,10 +296,10 @@ impl Window {
                         rotate_up,
                     );
 
-                    if (GetGamepadAxisMovement(
+                    if GetGamepadAxisMovement(
                         0,
                         GamepadAxis_GAMEPAD_AXIS_LEFT_Y as i32,
-                    ) <= -0.25)
+                    ) <= -0.25
                     {
                         CameraMoveForward(
                             camera,
@@ -307,10 +307,10 @@ impl Window {
                             move_in_world_plane,
                         );
                     }
-                    if (GetGamepadAxisMovement(
+                    if GetGamepadAxisMovement(
                         0,
                         GamepadAxis_GAMEPAD_AXIS_LEFT_X as i32,
-                    ) <= -0.25)
+                    ) <= -0.25
                     {
                         CameraMoveRight(
                             camera,
@@ -318,10 +318,10 @@ impl Window {
                             move_in_world_plane,
                         );
                     }
-                    if (GetGamepadAxisMovement(
+                    if GetGamepadAxisMovement(
                         0,
                         GamepadAxis_GAMEPAD_AXIS_LEFT_Y as i32,
-                    ) >= 0.25)
+                    ) >= 0.25
                     {
                         CameraMoveForward(
                             camera,
@@ -329,10 +329,10 @@ impl Window {
                             move_in_world_plane,
                         );
                     }
-                    if (GetGamepadAxisMovement(
+                    if GetGamepadAxisMovement(
                         0,
                         GamepadAxis_GAMEPAD_AXIS_LEFT_X as i32,
-                    ) >= 0.25)
+                    ) >= 0.25
                     {
                         CameraMoveRight(
                             camera,
@@ -342,11 +342,11 @@ impl Window {
                     }
                 }
 
-                if (mode == CM::Free) {
-                    if (IsKeyDown(KeyboardKey_KEY_SPACE as i32)) {
+                if mode == CM::Free {
+                    if IsKeyDown(KeyboardKey_KEY_SPACE as i32) {
                         CameraMoveUp(camera, CAMERA_MOVE_SPEED);
                     }
-                    if (IsKeyDown(KeyboardKey_KEY_LEFT_CONTROL as i32)) {
+                    if IsKeyDown(KeyboardKey_KEY_LEFT_CONTROL as i32) {
                         CameraMoveUp(camera, -CAMERA_MOVE_SPEED);
                     }
                 }
@@ -355,10 +355,10 @@ impl Window {
             if matches!(mode, CM::ThirdPerson | CM::Orbital | CM::Free) {
                 // Zoom target distance
                 CameraMoveToTarget(camera, -GetMouseWheelMove());
-                if (IsKeyPressed(KeyboardKey_KEY_KP_SUBTRACT as i32)) {
+                if IsKeyPressed(KeyboardKey_KEY_KP_SUBTRACT as i32) {
                     CameraMoveToTarget(camera, 2.0);
                 }
-                if (IsKeyPressed(KeyboardKey_KEY_KP_ADD as i32)) {
+                if IsKeyPressed(KeyboardKey_KEY_KP_ADD as i32) {
                     CameraMoveToTarget(camera, -2.0);
                 }
             }
