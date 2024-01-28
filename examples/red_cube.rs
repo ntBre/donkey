@@ -35,6 +35,7 @@ fn main() {
         win.begin_drawing();
         win.clear_background(background);
         win.begin_mode3d(camera);
+        win.update_camera(&mut camera, donkey::CameraMode::ThirdPerson);
         win.draw_cube(
             vector3!(0.0, 0.0, 0.0),
             cube_size,
