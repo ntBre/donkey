@@ -1,4 +1,4 @@
-use raylib_sys::Color;
+pub use raylib_sys::Color;
 
 pub const LIGHTGRAY: Color = Color { r: 200, g: 200, b: 200, a: 255 };
 pub const GRAY: Color = Color { r: 130, g: 130, b: 130, a: 255 };
