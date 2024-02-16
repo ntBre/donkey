@@ -1,4 +1,8 @@
-use std::ffi::{c_int, CString};
+use std::{
+    error::Error,
+    ffi::{c_int, CString, NulError},
+    fmt::Display,
+};
 
 use colors::IntoColor;
 use keys::Key;
@@ -22,7 +26,25 @@ use raylib_sys::{
 };
 
 pub mod colors;
+pub mod image;
 pub mod keys;
+
+#[derive(Debug)]
+pub struct DonkeyError(&'static str);
+
+impl Error for DonkeyError {}
+
+impl Display for DonkeyError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "DonkeyError({})", self.0)
+    }
+}
+
+impl From<NulError> for DonkeyError {
+    fn from(_value: NulError) -> Self {
+        Self("NulError")
+    }
+}
 
 #[derive(PartialEq)]
 #[repr(i32)]
