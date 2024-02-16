@@ -1,4 +1,4 @@
-use std::ffi::CString;
+use std::ffi::{c_int, CString};
 
 use colors::IntoColor;
 use keys::Key;
@@ -6,8 +6,8 @@ use raylib_sys::{
     vector3::{Vector3Add, Vector3Subtract, Vector3Transform},
     BeginDrawing, BeginMode3D, Camera3D, CameraMoveForward, CameraMoveRight,
     CameraMoveToTarget, CameraMoveUp, CameraPitch, CameraRoll, CameraYaw,
-    ClearBackground, DrawCube, DrawCylinderEx, DrawSphere, EndDrawing,
-    EndMode3D, GamepadAxis_GAMEPAD_AXIS_LEFT_X,
+    ClearBackground, DrawCube, DrawCylinderEx, DrawSphere, DrawText,
+    EndDrawing, EndMode3D, GamepadAxis_GAMEPAD_AXIS_LEFT_X,
     GamepadAxis_GAMEPAD_AXIS_LEFT_Y, GamepadAxis_GAMEPAD_AXIS_RIGHT_X,
     GamepadAxis_GAMEPAD_AXIS_RIGHT_Y, GetCameraUp, GetFrameTime,
     GetGamepadAxisMovement, GetMouseDelta, GetMouseWheelMove, InitWindow,
@@ -376,5 +376,25 @@ impl Window {
 
     pub fn end_mode3d(&self) {
         unsafe { EndMode3D() }
+    }
+
+    pub fn draw_text(
+        &self,
+        text: impl Into<Vec<u8>>,
+        x: usize,
+        y: usize,
+        font_size: usize,
+        color: impl IntoColor,
+    ) {
+        unsafe {
+            let cstr = CString::new(text).unwrap();
+            DrawText(
+                cstr.as_ptr(),
+                x as c_int,
+                y as c_int,
+                font_size as c_int,
+                color.into(),
+            );
+        }
     }
 }
