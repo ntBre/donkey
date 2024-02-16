@@ -26,4 +26,5 @@ pub enum Key {
     X = raylib_sys::KeyboardKey_KEY_X as i32,
     Y = raylib_sys::KeyboardKey_KEY_Y as i32,
     Z = raylib_sys::KeyboardKey_KEY_Z as i32,
+    Enter = raylib_sys::KeyboardKey_KEY_ENTER as i32,
 }
