@@ -28,6 +28,7 @@ use raylib_sys::{
 pub mod colors;
 pub mod image;
 pub mod keys;
+pub mod twod;
 
 #[derive(Debug)]
 pub struct DonkeyError(&'static str);
