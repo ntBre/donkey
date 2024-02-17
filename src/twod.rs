@@ -2,7 +2,7 @@
 
 use std::ffi::c_int;
 
-use raylib_sys::DrawRectangle;
+use raylib_sys::{DrawRectangle, DrawRectangleV};
 
 use crate::{colors::IntoColor, Window};
 
@@ -33,6 +33,18 @@ impl Window {
                 h as c_int,
                 color.into(),
             );
+        }
+    }
+
+    /// draw a color-filled rectangle with vector `position` and `size`
+    pub fn draw_rectangle_v(
+        &self,
+        position: Vector2,
+        size: Vector2,
+        color: impl IntoColor,
+    ) {
+        unsafe {
+            DrawRectangleV(position, size, color.into());
         }
     }
 }
