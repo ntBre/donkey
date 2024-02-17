@@ -6,6 +6,15 @@ use raylib_sys::DrawRectangle;
 
 use crate::{colors::IntoColor, Window};
 
+pub use raylib_sys::Vector2;
+
+#[macro_export]
+macro_rules! vector2 {
+    ($x:expr, $y:expr) => {
+        $crate::twod::Vector2 { x: $x, y: $y }
+    };
+}
+
 impl Window {
     /// draw a color-filled rectangle
     pub fn draw_rectangle(
@@ -25,5 +34,18 @@ impl Window {
                 color.into(),
             );
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn make_vector2() {
+        let v1 = vector2!(1.0, 2.0);
+        let v2 = Vector2 { x: 1.0, y: 2.0 };
+        assert_eq!(v1.x, v2.x);
+        assert_eq!(v1.y, v2.y);
     }
 }
