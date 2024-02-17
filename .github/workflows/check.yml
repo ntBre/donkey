@@ -42,6 +42,7 @@ jobs:
           cd raylib/src/
           make PLATFORM=PLATFORM_DESKTOP RAYLIB_LIBTYPE=SHARED
           sudo make install RAYLIB_LIBTYPE=SHARED
+          sudo cp --update rcamera.h /usr/local/include/rcamera.h
       - name: Install ${{ matrix.toolchain }}
         uses: dtolnay/rust-toolchain@master
         with:
@@ -67,6 +68,7 @@ jobs:
           cd raylib/src/
           make PLATFORM=PLATFORM_DESKTOP RAYLIB_LIBTYPE=SHARED
           sudo make install RAYLIB_LIBTYPE=SHARED
+          sudo cp --update rcamera.h /usr/local/include/rcamera.h
       - name: Install nightly
         uses: dtolnay/rust-toolchain@nightly
       - name: cargo doc
