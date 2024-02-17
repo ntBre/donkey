@@ -18,7 +18,7 @@ use raylib_sys::{
     IsGamepadAvailable, IsKeyDown, IsKeyPressed, IsMouseButtonDown,
     KeyboardKey_KEY_DOWN, KeyboardKey_KEY_KP_ADD, KeyboardKey_KEY_KP_SUBTRACT,
     KeyboardKey_KEY_LEFT, KeyboardKey_KEY_LEFT_CONTROL, KeyboardKey_KEY_RIGHT,
-    KeyboardKey_KEY_SPACE, KeyboardKey_KEY_UP, MatrixRotate,
+    KeyboardKey_KEY_SPACE, KeyboardKey_KEY_UP, MatrixRotate, MeasureText,
     MouseButton_MOUSE_BUTTON_LEFT, MouseButton_MOUSE_BUTTON_MIDDLE,
     SetTargetFPS, TakeScreenshot, Vector3, WindowShouldClose,
     CAMERA_MOUSE_MOVE_SENSITIVITY, CAMERA_MOVE_SPEED, CAMERA_ORBITAL_SPEED,
@@ -424,6 +424,15 @@ impl Window {
                 font_size as c_int,
                 color.into(),
             );
+        }
+    }
+
+    /// Measure the width of `text` for the default font with `font_size`.
+    /// panics if `text` cannot be converted to a [CString]
+    pub fn measure_text(&self, text: &str, font_size: usize) -> c_int {
+        unsafe {
+            let s = CString::new(text).unwrap();
+            MeasureText(s.as_ptr(), font_size as c_int)
         }
     }
 }
