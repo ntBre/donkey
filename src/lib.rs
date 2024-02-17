@@ -99,8 +99,14 @@ impl Window {
         }
     }
 
+    /// Check if a key is being pressed
     pub fn is_key_down(&self, key: Key) -> bool {
         unsafe { IsKeyDown(key as i32) }
+    }
+
+    /// Check if a key has been pressed once
+    pub fn is_key_pressed(&self, key: Key) -> bool {
+        unsafe { IsKeyPressed(key as i32) }
     }
 
     /// TODO do one of those cool closure things here:
