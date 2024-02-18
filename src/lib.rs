@@ -8,9 +8,9 @@ use colors::IntoColor;
 use keys::Key;
 use raylib_sys::{matrix::MatrixRotate, GetScreenHeight};
 use raylib_sys::{
-    BeginDrawing, BeginMode3D, Camera3D, CameraMoveToTarget, CameraMoveUp,
-    CameraRoll, ClearBackground, DrawCube, DrawCylinderEx, DrawSphere,
-    DrawText, EndDrawing, EndMode3D, GamepadAxis_GAMEPAD_AXIS_LEFT_X,
+    BeginDrawing, BeginMode3D, CameraMoveToTarget, CameraMoveUp, CameraRoll,
+    ClearBackground, DrawCube, DrawCylinderEx, DrawSphere, DrawText,
+    EndDrawing, EndMode3D, GamepadAxis_GAMEPAD_AXIS_LEFT_X,
     GamepadAxis_GAMEPAD_AXIS_LEFT_Y, GamepadAxis_GAMEPAD_AXIS_RIGHT_X,
     GamepadAxis_GAMEPAD_AXIS_RIGHT_Y, GetCameraUp, GetFrameTime,
     GetGamepadAxisMovement, GetMouseDelta, GetMouseWheelMove, InitWindow,
@@ -22,7 +22,7 @@ use raylib_sys::{
     CAMERA_PAN_SPEED, CAMERA_ROTATION_SPEED,
 };
 
-pub use raylib_sys::{Rectangle, Vector2, Vector3};
+pub use raylib_sys::{Camera3D, Rectangle, Vector2, Vector3};
 
 pub mod colors;
 pub mod image;
