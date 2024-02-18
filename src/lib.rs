@@ -6,7 +6,7 @@ use std::{
 
 use colors::IntoColor;
 use keys::Key;
-use raylib_sys::matrix::MatrixRotate;
+use raylib_sys::{matrix::MatrixRotate, GetScreenHeight};
 use raylib_sys::{
     vector3::{Vector3Add, Vector3Subtract, Vector3Transform},
     BeginDrawing, BeginMode3D, Camera3D, CameraMoveForward, CameraMoveRight,
@@ -91,6 +91,10 @@ impl Window {
 
     pub fn get_frame_time(&self) -> f32 {
         unsafe { GetFrameTime() }
+    }
+
+    pub fn get_screen_height(&self) -> c_int {
+        unsafe { GetScreenHeight() }
     }
 
     pub fn take_screenshot(&self, filename: &str) {
