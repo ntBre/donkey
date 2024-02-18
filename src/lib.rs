@@ -8,18 +8,17 @@ use colors::IntoColor;
 use keys::Key;
 use raylib_sys::{matrix::MatrixRotate, GetScreenHeight};
 use raylib_sys::{
-    BeginDrawing, BeginMode3D, CameraMoveToTarget, CameraMoveUp, CameraRoll,
-    ClearBackground, DrawCube, DrawCylinderEx, DrawSphere, DrawText,
-    EndDrawing, EndMode3D, GamepadAxis_GAMEPAD_AXIS_LEFT_X,
-    GamepadAxis_GAMEPAD_AXIS_LEFT_Y, GamepadAxis_GAMEPAD_AXIS_RIGHT_X,
-    GamepadAxis_GAMEPAD_AXIS_RIGHT_Y, GetCameraUp, GetFrameTime,
-    GetGamepadAxisMovement, GetMouseDelta, GetMouseWheelMove, InitWindow,
-    IsGamepadAvailable, IsKeyDown, IsKeyPressed, IsMouseButtonDown,
-    KeyboardKey_KEY_KP_ADD, KeyboardKey_KEY_KP_SUBTRACT, MeasureText,
-    MouseButton_MOUSE_BUTTON_LEFT, MouseButton_MOUSE_BUTTON_MIDDLE,
-    SetTargetFPS, TakeScreenshot, WindowShouldClose,
-    CAMERA_MOUSE_MOVE_SENSITIVITY, CAMERA_MOVE_SPEED, CAMERA_ORBITAL_SPEED,
-    CAMERA_PAN_SPEED, CAMERA_ROTATION_SPEED,
+    BeginDrawing, BeginMode3D, CameraMoveToTarget, CameraRoll, ClearBackground,
+    DrawCube, DrawCylinderEx, DrawSphere, DrawText, EndDrawing, EndMode3D,
+    GamepadAxis_GAMEPAD_AXIS_LEFT_X, GamepadAxis_GAMEPAD_AXIS_LEFT_Y,
+    GamepadAxis_GAMEPAD_AXIS_RIGHT_X, GamepadAxis_GAMEPAD_AXIS_RIGHT_Y,
+    GetCameraUp, GetFrameTime, GetGamepadAxisMovement, GetMouseDelta,
+    GetMouseWheelMove, InitWindow, IsGamepadAvailable, IsKeyDown, IsKeyPressed,
+    IsMouseButtonDown, KeyboardKey_KEY_KP_ADD, KeyboardKey_KEY_KP_SUBTRACT,
+    MeasureText, MouseButton_MOUSE_BUTTON_LEFT,
+    MouseButton_MOUSE_BUTTON_MIDDLE, SetTargetFPS, TakeScreenshot,
+    WindowShouldClose, CAMERA_MOUSE_MOVE_SENSITIVITY, CAMERA_MOVE_SPEED,
+    CAMERA_ORBITAL_SPEED, CAMERA_PAN_SPEED, CAMERA_ROTATION_SPEED,
 };
 
 pub use raylib_sys::{Camera3D, Rectangle, Vector2, Vector3};
@@ -246,10 +245,10 @@ impl Window {
                             );
                         }
                         if mouse_delta.y > 0.0 {
-                            CameraMoveUp(camera, -CAMERA_PAN_SPEED);
+                            camera.move_up(-CAMERA_PAN_SPEED);
                         }
                         if mouse_delta.y < 0.0 {
-                            CameraMoveUp(camera, CAMERA_PAN_SPEED);
+                            camera.move_up(CAMERA_PAN_SPEED);
                         }
                     } else {
                         // Mouse support
@@ -357,10 +356,10 @@ impl Window {
 
                 if mode == CM::Free {
                     if self.is_key_down(Key::Space) {
-                        CameraMoveUp(camera, CAMERA_MOVE_SPEED);
+                        camera.move_up(CAMERA_MOVE_SPEED);
                     }
                     if self.is_key_down(Key::LControl) {
-                        CameraMoveUp(camera, -CAMERA_MOVE_SPEED);
+                        camera.move_up(-CAMERA_MOVE_SPEED);
                     }
                 }
             }
