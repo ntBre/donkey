@@ -13,6 +13,7 @@ pub const CAMERA_PAN_SPEED: f32 = 0.2;
 pub const CAMERA_MOUSE_MOVE_SENSITIVITY: f32 = 0.003;
 pub const CAMERA_MOVE_SPEED: f32 = 0.09;
 
+pub mod camera3d;
 pub mod matrix;
 pub mod rectangle;
 pub mod vector2;

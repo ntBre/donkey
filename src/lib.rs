@@ -9,18 +9,17 @@ use keys::Key;
 use raylib_sys::{matrix::MatrixRotate, GetScreenHeight};
 use raylib_sys::{
     BeginDrawing, BeginMode3D, Camera3D, CameraMoveForward, CameraMoveRight,
-    CameraMoveToTarget, CameraMoveUp, CameraPitch, CameraRoll, CameraYaw,
-    ClearBackground, DrawCube, DrawCylinderEx, DrawSphere, DrawText,
-    EndDrawing, EndMode3D, GamepadAxis_GAMEPAD_AXIS_LEFT_X,
-    GamepadAxis_GAMEPAD_AXIS_LEFT_Y, GamepadAxis_GAMEPAD_AXIS_RIGHT_X,
-    GamepadAxis_GAMEPAD_AXIS_RIGHT_Y, GetCameraUp, GetFrameTime,
-    GetGamepadAxisMovement, GetMouseDelta, GetMouseWheelMove, InitWindow,
-    IsGamepadAvailable, IsKeyDown, IsKeyPressed, IsMouseButtonDown,
-    KeyboardKey_KEY_KP_ADD, KeyboardKey_KEY_KP_SUBTRACT, MeasureText,
-    MouseButton_MOUSE_BUTTON_LEFT, MouseButton_MOUSE_BUTTON_MIDDLE,
-    SetTargetFPS, TakeScreenshot, WindowShouldClose,
-    CAMERA_MOUSE_MOVE_SENSITIVITY, CAMERA_MOVE_SPEED, CAMERA_ORBITAL_SPEED,
-    CAMERA_PAN_SPEED, CAMERA_ROTATION_SPEED,
+    CameraMoveToTarget, CameraMoveUp, CameraRoll, CameraYaw, ClearBackground,
+    DrawCube, DrawCylinderEx, DrawSphere, DrawText, EndDrawing, EndMode3D,
+    GamepadAxis_GAMEPAD_AXIS_LEFT_X, GamepadAxis_GAMEPAD_AXIS_LEFT_Y,
+    GamepadAxis_GAMEPAD_AXIS_RIGHT_X, GamepadAxis_GAMEPAD_AXIS_RIGHT_Y,
+    GetCameraUp, GetFrameTime, GetGamepadAxisMovement, GetMouseDelta,
+    GetMouseWheelMove, InitWindow, IsGamepadAvailable, IsKeyDown, IsKeyPressed,
+    IsMouseButtonDown, KeyboardKey_KEY_KP_ADD, KeyboardKey_KEY_KP_SUBTRACT,
+    MeasureText, MouseButton_MOUSE_BUTTON_LEFT,
+    MouseButton_MOUSE_BUTTON_MIDDLE, SetTargetFPS, TakeScreenshot,
+    WindowShouldClose, CAMERA_MOUSE_MOVE_SENSITIVITY, CAMERA_MOVE_SPEED,
+    CAMERA_ORBITAL_SPEED, CAMERA_PAN_SPEED, CAMERA_ROTATION_SPEED,
 };
 
 pub use raylib_sys::{Rectangle, Vector2, Vector3};
@@ -197,8 +196,7 @@ impl Window {
             } else {
                 // Camera rotation
                 if self.is_key_down(Key::Down) {
-                    CameraPitch(
-                        camera,
+                    camera.pitch(
                         -CAMERA_ROTATION_SPEED,
                         lock_view,
                         rotate_around_target,
@@ -206,8 +204,7 @@ impl Window {
                     )
                 };
                 if self.is_key_down(Key::Up) {
-                    CameraPitch(
-                        camera,
+                    camera.pitch(
                         CAMERA_ROTATION_SPEED,
                         lock_view,
                         rotate_around_target,
@@ -275,8 +272,7 @@ impl Window {
                                     * CAMERA_MOUSE_MOVE_SENSITIVITY,
                                 rotate_around_target,
                             );
-                            CameraPitch(
-                                camera,
+                            camera.pitch(
                                 -mouse_position_delta.y
                                     * CAMERA_MOUSE_MOVE_SENSITIVITY,
                                 lock_view,
@@ -326,8 +322,7 @@ impl Window {
                             * CAMERA_MOUSE_MOVE_SENSITIVITY,
                         rotate_around_target,
                     );
-                    CameraPitch(
-                        camera,
+                    camera.pitch(
                         -(GetGamepadAxisMovement(
                             0,
                             GamepadAxis_GAMEPAD_AXIS_RIGHT_Y as i32,
