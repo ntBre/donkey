@@ -8,7 +8,6 @@ use colors::IntoColor;
 use keys::Key;
 use raylib_sys::{matrix::MatrixRotate, GetScreenHeight};
 use raylib_sys::{
-    vector3::{Vector3Add, Vector3Subtract, Vector3Transform},
     BeginDrawing, BeginMode3D, Camera3D, CameraMoveForward, CameraMoveRight,
     CameraMoveToTarget, CameraMoveUp, CameraPitch, CameraRoll, CameraYaw,
     ClearBackground, DrawCube, DrawCylinderEx, DrawSphere, DrawText,
@@ -21,10 +20,12 @@ use raylib_sys::{
     KeyboardKey_KEY_LEFT, KeyboardKey_KEY_LEFT_CONTROL, KeyboardKey_KEY_RIGHT,
     KeyboardKey_KEY_SPACE, KeyboardKey_KEY_UP, MeasureText,
     MouseButton_MOUSE_BUTTON_LEFT, MouseButton_MOUSE_BUTTON_MIDDLE,
-    SetTargetFPS, TakeScreenshot, Vector3, WindowShouldClose,
+    SetTargetFPS, TakeScreenshot, WindowShouldClose,
     CAMERA_MOUSE_MOVE_SENSITIVITY, CAMERA_MOVE_SPEED, CAMERA_ORBITAL_SPEED,
     CAMERA_PAN_SPEED, CAMERA_ROTATION_SPEED,
 };
+
+pub use raylib_sys::{Rectangle, Vector2, Vector3};
 
 pub mod colors;
 pub mod image;
@@ -192,9 +193,9 @@ impl Window {
                     GetCameraUp(camera),
                     CAMERA_ORBITAL_SPEED * GetFrameTime(),
                 );
-                let mut view = Vector3Subtract(camera.position, camera.target);
-                view = Vector3Transform(view, rotation);
-                camera.position = Vector3Add(camera.target, view);
+                let mut view = camera.position - camera.target;
+                view = view.transform(rotation);
+                camera.position = camera.target + view;
             } else {
                 // Camera rotation
                 if IsKeyDown(KeyboardKey_KEY_DOWN as i32) {
