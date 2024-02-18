@@ -16,9 +16,7 @@ use raylib_sys::{
     GamepadAxis_GAMEPAD_AXIS_RIGHT_Y, GetCameraUp, GetFrameTime,
     GetGamepadAxisMovement, GetMouseDelta, GetMouseWheelMove, InitWindow,
     IsGamepadAvailable, IsKeyDown, IsKeyPressed, IsMouseButtonDown,
-    KeyboardKey_KEY_DOWN, KeyboardKey_KEY_KP_ADD, KeyboardKey_KEY_KP_SUBTRACT,
-    KeyboardKey_KEY_LEFT, KeyboardKey_KEY_LEFT_CONTROL, KeyboardKey_KEY_RIGHT,
-    KeyboardKey_KEY_SPACE, KeyboardKey_KEY_UP, MeasureText,
+    KeyboardKey_KEY_KP_ADD, KeyboardKey_KEY_KP_SUBTRACT, MeasureText,
     MouseButton_MOUSE_BUTTON_LEFT, MouseButton_MOUSE_BUTTON_MIDDLE,
     SetTargetFPS, TakeScreenshot, WindowShouldClose,
     CAMERA_MOUSE_MOVE_SENSITIVITY, CAMERA_MOVE_SPEED, CAMERA_ORBITAL_SPEED,
@@ -198,7 +196,7 @@ impl Window {
                 camera.position = camera.target + view;
             } else {
                 // Camera rotation
-                if IsKeyDown(KeyboardKey_KEY_DOWN as i32) {
+                if self.is_key_down(Key::Down) {
                     CameraPitch(
                         camera,
                         -CAMERA_ROTATION_SPEED,
@@ -207,7 +205,7 @@ impl Window {
                         rotate_up,
                     )
                 };
-                if IsKeyDown(KeyboardKey_KEY_UP as i32) {
+                if self.is_key_down(Key::Up) {
                     CameraPitch(
                         camera,
                         CAMERA_ROTATION_SPEED,
@@ -216,24 +214,24 @@ impl Window {
                         rotate_up,
                     )
                 };
-                if IsKeyDown(KeyboardKey_KEY_RIGHT as i32) {
+                if self.is_key_down(Key::Right) {
                     CameraYaw(
                         camera,
                         -CAMERA_ROTATION_SPEED,
                         rotate_around_target,
                     )
                 };
-                if IsKeyDown(KeyboardKey_KEY_LEFT as i32) {
+                if self.is_key_down(Key::Left) {
                     CameraYaw(
                         camera,
                         CAMERA_ROTATION_SPEED,
                         rotate_around_target,
                     )
                 };
-                if IsKeyDown(Key::Q as i32) {
+                if self.is_key_down(Key::Q) {
                     CameraRoll(camera, -CAMERA_ROTATION_SPEED)
                 };
-                if IsKeyDown(Key::E as i32) {
+                if self.is_key_down(Key::E) {
                     CameraRoll(camera, CAMERA_ROTATION_SPEED)
                 };
 
@@ -289,28 +287,28 @@ impl Window {
                     }
 
                     // Keyboard support
-                    if IsKeyDown(Key::W as i32) {
+                    if self.is_key_down(Key::W) {
                         CameraMoveForward(
                             camera,
                             CAMERA_MOVE_SPEED,
                             move_in_world_plane,
                         );
                     }
-                    if IsKeyDown(Key::A as i32) {
+                    if self.is_key_down(Key::A) {
                         CameraMoveRight(
                             camera,
                             -CAMERA_MOVE_SPEED,
                             move_in_world_plane,
                         );
                     }
-                    if IsKeyDown(Key::S as i32) {
+                    if self.is_key_down(Key::S) {
                         CameraMoveForward(
                             camera,
                             -CAMERA_MOVE_SPEED,
                             move_in_world_plane,
                         );
                     }
-                    if IsKeyDown(Key::D as i32) {
+                    if self.is_key_down(Key::D) {
                         CameraMoveRight(
                             camera,
                             CAMERA_MOVE_SPEED,
@@ -387,10 +385,10 @@ impl Window {
                 }
 
                 if mode == CM::Free {
-                    if IsKeyDown(KeyboardKey_KEY_SPACE as i32) {
+                    if self.is_key_down(Key::Space) {
                         CameraMoveUp(camera, CAMERA_MOVE_SPEED);
                     }
-                    if IsKeyDown(KeyboardKey_KEY_LEFT_CONTROL as i32) {
+                    if self.is_key_down(Key::LControl) {
                         CameraMoveUp(camera, -CAMERA_MOVE_SPEED);
                     }
                 }
