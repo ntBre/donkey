@@ -6,6 +6,7 @@ use std::{
 
 use colors::IntoColor;
 use keys::Key;
+use raylib_sys::matrix::MatrixRotate;
 use raylib_sys::{
     vector3::{Vector3Add, Vector3Subtract, Vector3Transform},
     BeginDrawing, BeginMode3D, Camera3D, CameraMoveForward, CameraMoveRight,
@@ -18,7 +19,7 @@ use raylib_sys::{
     IsGamepadAvailable, IsKeyDown, IsKeyPressed, IsMouseButtonDown,
     KeyboardKey_KEY_DOWN, KeyboardKey_KEY_KP_ADD, KeyboardKey_KEY_KP_SUBTRACT,
     KeyboardKey_KEY_LEFT, KeyboardKey_KEY_LEFT_CONTROL, KeyboardKey_KEY_RIGHT,
-    KeyboardKey_KEY_SPACE, KeyboardKey_KEY_UP, MatrixRotate, MeasureText,
+    KeyboardKey_KEY_SPACE, KeyboardKey_KEY_UP, MeasureText,
     MouseButton_MOUSE_BUTTON_LEFT, MouseButton_MOUSE_BUTTON_MIDDLE,
     SetTargetFPS, TakeScreenshot, Vector3, WindowShouldClose,
     CAMERA_MOUSE_MOVE_SENSITIVITY, CAMERA_MOVE_SPEED, CAMERA_ORBITAL_SPEED,
