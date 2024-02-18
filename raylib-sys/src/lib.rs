@@ -14,4 +14,6 @@ pub const CAMERA_MOUSE_MOVE_SENSITIVITY: f32 = 0.003;
 pub const CAMERA_MOVE_SPEED: f32 = 0.09;
 
 pub mod matrix;
+pub mod rectangle;
+pub mod vector2;
 pub mod vector3;
