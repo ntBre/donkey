@@ -6,6 +6,10 @@ impl Vector3 {
     pub fn new(x: f32, y: f32, z: f32) -> Self {
         Self { x, y, z }
     }
+
+    pub fn transform(self, mat: Matrix) -> Self {
+        Vector3Transform(self, mat)
+    }
 }
 
 pub fn Vector3Add(v1: Vector3, v2: Vector3) -> Vector3 {
