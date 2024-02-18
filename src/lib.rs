@@ -8,18 +8,18 @@ use colors::IntoColor;
 use keys::Key;
 use raylib_sys::{matrix::MatrixRotate, GetScreenHeight};
 use raylib_sys::{
-    BeginDrawing, BeginMode3D, Camera3D, CameraMoveForward, CameraMoveRight,
-    CameraMoveToTarget, CameraMoveUp, CameraRoll, CameraYaw, ClearBackground,
-    DrawCube, DrawCylinderEx, DrawSphere, DrawText, EndDrawing, EndMode3D,
-    GamepadAxis_GAMEPAD_AXIS_LEFT_X, GamepadAxis_GAMEPAD_AXIS_LEFT_Y,
-    GamepadAxis_GAMEPAD_AXIS_RIGHT_X, GamepadAxis_GAMEPAD_AXIS_RIGHT_Y,
-    GetCameraUp, GetFrameTime, GetGamepadAxisMovement, GetMouseDelta,
-    GetMouseWheelMove, InitWindow, IsGamepadAvailable, IsKeyDown, IsKeyPressed,
-    IsMouseButtonDown, KeyboardKey_KEY_KP_ADD, KeyboardKey_KEY_KP_SUBTRACT,
-    MeasureText, MouseButton_MOUSE_BUTTON_LEFT,
-    MouseButton_MOUSE_BUTTON_MIDDLE, SetTargetFPS, TakeScreenshot,
-    WindowShouldClose, CAMERA_MOUSE_MOVE_SENSITIVITY, CAMERA_MOVE_SPEED,
-    CAMERA_ORBITAL_SPEED, CAMERA_PAN_SPEED, CAMERA_ROTATION_SPEED,
+    BeginDrawing, BeginMode3D, Camera3D, CameraMoveToTarget, CameraMoveUp,
+    CameraRoll, ClearBackground, DrawCube, DrawCylinderEx, DrawSphere,
+    DrawText, EndDrawing, EndMode3D, GamepadAxis_GAMEPAD_AXIS_LEFT_X,
+    GamepadAxis_GAMEPAD_AXIS_LEFT_Y, GamepadAxis_GAMEPAD_AXIS_RIGHT_X,
+    GamepadAxis_GAMEPAD_AXIS_RIGHT_Y, GetCameraUp, GetFrameTime,
+    GetGamepadAxisMovement, GetMouseDelta, GetMouseWheelMove, InitWindow,
+    IsGamepadAvailable, IsKeyDown, IsKeyPressed, IsMouseButtonDown,
+    KeyboardKey_KEY_KP_ADD, KeyboardKey_KEY_KP_SUBTRACT, MeasureText,
+    MouseButton_MOUSE_BUTTON_LEFT, MouseButton_MOUSE_BUTTON_MIDDLE,
+    SetTargetFPS, TakeScreenshot, WindowShouldClose,
+    CAMERA_MOUSE_MOVE_SENSITIVITY, CAMERA_MOVE_SPEED, CAMERA_ORBITAL_SPEED,
+    CAMERA_PAN_SPEED, CAMERA_ROTATION_SPEED,
 };
 
 pub use raylib_sys::{Rectangle, Vector2, Vector3};
@@ -212,18 +212,10 @@ impl Window {
                     )
                 };
                 if self.is_key_down(Key::Right) {
-                    CameraYaw(
-                        camera,
-                        -CAMERA_ROTATION_SPEED,
-                        rotate_around_target,
-                    )
+                    camera.yaw(-CAMERA_ROTATION_SPEED, rotate_around_target)
                 };
                 if self.is_key_down(Key::Left) {
-                    CameraYaw(
-                        camera,
-                        CAMERA_ROTATION_SPEED,
-                        rotate_around_target,
-                    )
+                    camera.yaw(CAMERA_ROTATION_SPEED, rotate_around_target)
                 };
                 if self.is_key_down(Key::Q) {
                     CameraRoll(camera, -CAMERA_ROTATION_SPEED)
@@ -242,15 +234,13 @@ impl Window {
                     {
                         let mouse_delta = GetMouseDelta();
                         if mouse_delta.x > 0.0 {
-                            CameraMoveRight(
-                                camera,
+                            camera.move_right(
                                 CAMERA_PAN_SPEED,
                                 move_in_world_plane,
                             );
                         }
                         if mouse_delta.x < 0.0 {
-                            CameraMoveRight(
-                                camera,
+                            camera.move_right(
                                 -CAMERA_PAN_SPEED,
                                 move_in_world_plane,
                             );
@@ -266,8 +256,7 @@ impl Window {
                         if IsMouseButtonDown(
                             MouseButton_MOUSE_BUTTON_LEFT as i32,
                         ) {
-                            CameraYaw(
-                                camera,
+                            camera.yaw(
                                 -mouse_position_delta.x
                                     * CAMERA_MOUSE_MOVE_SENSITIVITY,
                                 rotate_around_target,
@@ -284,37 +273,30 @@ impl Window {
 
                     // Keyboard support
                     if self.is_key_down(Key::W) {
-                        CameraMoveForward(
-                            camera,
+                        camera.move_forward(
                             CAMERA_MOVE_SPEED,
                             move_in_world_plane,
                         );
                     }
                     if self.is_key_down(Key::A) {
-                        CameraMoveRight(
-                            camera,
+                        camera.move_right(
                             -CAMERA_MOVE_SPEED,
                             move_in_world_plane,
                         );
                     }
                     if self.is_key_down(Key::S) {
-                        CameraMoveForward(
-                            camera,
+                        camera.move_forward(
                             -CAMERA_MOVE_SPEED,
                             move_in_world_plane,
                         );
                     }
                     if self.is_key_down(Key::D) {
-                        CameraMoveRight(
-                            camera,
-                            CAMERA_MOVE_SPEED,
-                            move_in_world_plane,
-                        );
+                        camera
+                            .move_right(CAMERA_MOVE_SPEED, move_in_world_plane);
                     }
                 } else {
                     // Gamepad controller support
-                    CameraYaw(
-                        camera,
+                    camera.yaw(
                         -(GetGamepadAxisMovement(
                             0,
                             GamepadAxis_GAMEPAD_AXIS_RIGHT_X as i32,
@@ -338,8 +320,7 @@ impl Window {
                         GamepadAxis_GAMEPAD_AXIS_LEFT_Y as i32,
                     ) <= -0.25
                     {
-                        CameraMoveForward(
-                            camera,
+                        camera.move_forward(
                             CAMERA_MOVE_SPEED,
                             move_in_world_plane,
                         );
@@ -349,8 +330,7 @@ impl Window {
                         GamepadAxis_GAMEPAD_AXIS_LEFT_X as i32,
                     ) <= -0.25
                     {
-                        CameraMoveRight(
-                            camera,
+                        camera.move_right(
                             -CAMERA_MOVE_SPEED,
                             move_in_world_plane,
                         );
@@ -360,8 +340,7 @@ impl Window {
                         GamepadAxis_GAMEPAD_AXIS_LEFT_Y as i32,
                     ) >= 0.25
                     {
-                        CameraMoveForward(
-                            camera,
+                        camera.move_forward(
                             -CAMERA_MOVE_SPEED,
                             move_in_world_plane,
                         );
@@ -371,11 +350,8 @@ impl Window {
                         GamepadAxis_GAMEPAD_AXIS_LEFT_X as i32,
                     ) >= 0.25
                     {
-                        CameraMoveRight(
-                            camera,
-                            CAMERA_MOVE_SPEED,
-                            move_in_world_plane,
-                        );
+                        camera
+                            .move_right(CAMERA_MOVE_SPEED, move_in_world_plane);
                     }
                 }
 
