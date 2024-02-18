@@ -2,7 +2,7 @@
 
 use std::ffi::c_int;
 
-use raylib_sys::{DrawRectangle, DrawRectangleV};
+use raylib_sys::{DrawRectangle, DrawRectangleRec, DrawRectangleV, Rectangle};
 
 use crate::{colors::IntoColor, Window};
 
@@ -45,6 +45,13 @@ impl Window {
     ) {
         unsafe {
             DrawRectangleV(position, size, color.into());
+        }
+    }
+
+    /// draw a color-filled rectangle
+    pub fn draw_rectangle_rec(&self, rec: Rectangle, color: impl IntoColor) {
+        unsafe {
+            DrawRectangleRec(rec, color.into());
         }
     }
 }
