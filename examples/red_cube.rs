@@ -1,5 +1,7 @@
-use donkey::{colors::color, keys::Key, vector3, Window};
-use raylib_sys::Camera3D;
+use donkey::{
+    colors::color, keys::Key, vector3, Camera3D, CameraMode, CameraProjection,
+    Window,
+};
 
 /// basic example based on Tsoding's "Ridiculously Easy 3D in C" video:
 /// https://www.youtube.com/watch?v=K7hWqxC_7Mw
@@ -9,13 +11,13 @@ fn main() {
     let title = "review";
     let cube_size = 1.0;
     let camera_speed = cube_size;
-    let mut camera = Camera3D {
-        position: vector3!(0.0, 0.0, -cube_size),
-        target: vector3!(0.0, 0.0, 0.0),
-        up: vector3!(0.0, 1.0, 0.0),
-        fovy: 90.0,
-        projection: raylib_sys::CameraProjection_CAMERA_PERSPECTIVE as i32,
-    };
+    let mut camera = Camera3D::new(
+        vector3!(0.0, 0.0, -cube_size),
+        vector3!(0.0, 0.0, 0.0),
+        vector3!(0.0, 1.0, 0.0),
+        90.0,
+        CameraProjection::Perspective,
+    );
     let win = Window::init(width, height, title);
     let background = color(0x181818AA);
     while !win.should_close() {
@@ -35,7 +37,7 @@ fn main() {
         win.begin_drawing();
         win.clear_background(background);
         win.begin_mode3d(camera);
-        win.update_camera(&mut camera, donkey::CameraMode::ThirdPerson);
+        win.update_camera(&mut camera, CameraMode::ThirdPerson);
         win.draw_cube(
             vector3!(0.0, 0.0, 0.0),
             cube_size,
