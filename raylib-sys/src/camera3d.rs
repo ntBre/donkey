@@ -1,9 +1,32 @@
 use crate::{
     Camera3D, CameraMoveForward, CameraMoveRight, CameraMoveUp, CameraPitch,
-    CameraYaw,
+    CameraProjection_CAMERA_ORTHOGRAPHIC, CameraProjection_CAMERA_PERSPECTIVE,
+    CameraYaw, Vector3,
 };
 
+#[repr(i32)]
+pub enum CameraProjection {
+    Perspective = CameraProjection_CAMERA_PERSPECTIVE as i32,
+    Orthographic = CameraProjection_CAMERA_ORTHOGRAPHIC as i32,
+}
+
 impl Camera3D {
+    pub fn new(
+        position: Vector3,
+        target: Vector3,
+        up: Vector3,
+        fovy: f32,
+        projection: CameraProjection,
+    ) -> Self {
+        Self {
+            position,
+            target,
+            up,
+            fovy,
+            projection: projection as i32,
+        }
+    }
+
     pub fn pitch(
         &mut self,
         angle: f32,
