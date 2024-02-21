@@ -91,9 +91,7 @@ fn main() {
             };
             // draw apples
             if let Some((x, y)) = apple {
-                canvas.draw_rectangle(
-                    x as usize, y as usize, SQR_SIZE, SQR_SIZE, WHITE,
-                );
+                canvas.draw_rectangle(x, y, SQR_SIZE, SQR_SIZE, WHITE);
             } else if rand_float() < 0.5 {
                 let x = rand() % WIDTH as u32;
                 let y = rand() % HEIGHT as u32;
