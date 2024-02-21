@@ -28,6 +28,7 @@ pub mod colors;
 pub mod image;
 pub mod keys;
 pub mod twod;
+pub mod window_ex;
 
 #[derive(Debug)]
 pub struct DonkeyError(&'static str);
