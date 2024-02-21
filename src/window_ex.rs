@@ -23,6 +23,9 @@ impl Canvas {
         Window.clear_background(color);
     }
 
+    // TODO you actually want i32 on the positions because then it's okay for
+    // them to be slightly negative. otherwise my snake, for example, teleports
+    // before the square is visually to the edge of the screen
     pub fn draw_rectangle(
         &self,
         x: usize,
