@@ -21,6 +21,7 @@ use raylib_sys::{
     CAMERA_ORBITAL_SPEED, CAMERA_PAN_SPEED, CAMERA_ROTATION_SPEED,
 };
 
+pub use raylib_sys::camera3d::CameraProjection;
 pub use raylib_sys::{Camera3D, Rectangle, Vector2, Vector3};
 
 pub mod colors;
