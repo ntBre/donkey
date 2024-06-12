@@ -1,6 +1,10 @@
 //! This is an experimental Window and drawing API based on closures rather than
 //! begin and end pairs
 
+use std::ffi::c_int;
+
+use raylib_sys::DrawLine;
+
 use crate::{colors::IntoColor, Window};
 
 pub fn with_window(
@@ -35,6 +39,25 @@ impl Canvas {
         color: impl IntoColor,
     ) {
         Window.draw_rectangle(x, y, w, h, color)
+    }
+
+    pub fn draw_line(
+        &self,
+        x1: usize,
+        y1: usize,
+        x2: usize,
+        y2: usize,
+        color: impl IntoColor,
+    ) {
+        unsafe {
+            DrawLine(
+                x1 as c_int,
+                y1 as c_int,
+                x2 as c_int,
+                y2 as c_int,
+                color.into(),
+            )
+        }
     }
 }
 
