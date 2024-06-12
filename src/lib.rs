@@ -6,7 +6,10 @@ use std::{
 
 use colors::IntoColor;
 use keys::Key;
-use raylib_sys::{matrix::MatrixRotate, GetScreenHeight};
+use raylib_sys::{
+    matrix::MatrixRotate, GetMousePosition, GetScreenHeight,
+    IsMouseButtonPressed,
+};
 use raylib_sys::{
     BeginDrawing, BeginMode3D, CameraMoveToTarget, CameraRoll, ClearBackground,
     DrawCube, DrawCylinderEx, DrawSphere, DrawText, EndDrawing, EndMode3D,
@@ -29,6 +32,18 @@ pub mod image;
 pub mod keys;
 pub mod twod;
 pub mod window_ex;
+
+#[derive(Clone, Copy)]
+#[repr(u8)]
+pub enum MouseButton {
+    Left = MouseButton_MOUSE_BUTTON_LEFT as u8,
+}
+
+impl MouseButton {
+    pub fn is_pressed(&self) -> bool {
+        unsafe { IsMouseButtonPressed(*self as c_int) }
+    }
+}
 
 #[derive(Debug)]
 pub struct DonkeyError(&'static str);
@@ -410,5 +425,9 @@ impl Window {
             let s = CString::new(text).unwrap();
             MeasureText(s.as_ptr(), font_size as c_int)
         }
+    }
+
+    pub fn get_mouse_position(&self) -> Vector2 {
+        unsafe { GetMousePosition() }
     }
 }
